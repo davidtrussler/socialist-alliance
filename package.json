@@ -1,0 +1,19 @@
+{
+  "name": "socialist-alliance",
+  "version": "1.0.0",
+  "description": "Socialist Alliance national site",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidtrussler/socialist-alliance.git"
+  },
+  "author": "David Trussler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidtrussler/socialist-alliance/issues"
+  },
+  "homepage": "https://github.com/davidtrussler/socialist-alliance#readme"
+}
