@@ -4,7 +4,7 @@
   "description": "Socialist Alliance national site",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/server/index.js -p $PORT",
     "dev": "nodemon ./src/server/index.js"
   },
@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/davidtrussler/socialist-alliance#readme",
   "dependencies": {
+    "@vue/server-renderer": "^3.0.5",
     "express": "^4.17.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "vue": "^3.0.5"
   }
 }
