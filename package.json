@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/davidtrussler/socialist-alliance/issues"
   },
-  "homepage": "https://github.com/davidtrussler/socialist-alliance#readme"
+  "homepage": "https://github.com/davidtrussler/socialist-alliance#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
 }
