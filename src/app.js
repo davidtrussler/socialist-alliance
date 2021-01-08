@@ -1,7 +1,11 @@
 const Vue = require('vue'); 
+const AppHeader = require('./components/AppHeader')
 
 const createSSRApp = function() {
 	return Vue.createSSRApp({
+		components: {
+			'app-header': AppHeader
+		}, 
 		template: `
 			<!DOCTYPE html>
 			<html lang="en-GB">
@@ -16,9 +20,7 @@ const createSSRApp = function() {
 
 				<body class="Home">
 					<div id="wrap">
-						<div id="banner">
-							<img src="/banner.gif"/>
-						</div>
+						<app-header></app-header>
 
 						<div id="links">
 							<ul>
