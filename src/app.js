@@ -1,10 +1,12 @@
 const Vue = require('vue'); 
-const AppHeader = require('./components/AppHeader')
+const AppHeader = require('./components/AppHeader'); 
+const AppNav = require('./components/AppNav'); 
 
 const createSSRApp = function() {
 	return Vue.createSSRApp({
 		components: {
-			'app-header': AppHeader
+			'app-header': AppHeader, 
+			'app-nav': AppNav
 		}, 
 		template: `
 			<!DOCTYPE html>
@@ -21,18 +23,7 @@ const createSSRApp = function() {
 				<body class="Home">
 					<div id="wrap">
 						<app-header></app-header>
-
-						<div id="links">
-							<ul>
-								<li class="live">Home</li>
-								<li><a href="/page.php?linkid=3">CNWP</a></li>
-								<li><a href="/page.php?linkid=2">Left Unity</a></li>
-								<li><a href="/page.php?linkid=4">Reports</a></li>
-								<li><a href="/events.php">Events</a></li>
-								<li><a href="/about.php">About Us</a></li>
-								<li><a href="/contact.php">Contact Us</a></li>
-							</ul>
-						</div>
+						<app-nav></app-nav>
 
 						<div id="content">
 							<div id="col_full">
