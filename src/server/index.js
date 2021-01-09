@@ -7,7 +7,7 @@ const port = 4000;
 server.use(express.static('public')); 
 
 server.get('*', (req, res) => {
-	const app = createSSRApp();
+	const app = createSSRApp(req.url);
 
 	renderer.renderToString(app).then(markup => {
 		res.end(`${markup}`); 

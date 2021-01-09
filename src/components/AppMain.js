@@ -1,10 +1,7 @@
-const content = require('fs').readFileSync('./src/content/Home.html', 'utf-8'); 
-
 const AppMain = {
+  props: ['content'], 
   template: `
-    <main id="content">
-      ${content}
-    </main>
+    <main id="content" v-html="content"></main>
   ` 
 }
 
