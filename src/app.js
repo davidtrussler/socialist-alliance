@@ -9,6 +9,9 @@ const createSSRApp = function(url) {
 
 	if (url === '/') {
 		content = require('fs').readFileSync('./src/content/Home.html', 'utf-8'); 
+	} else if (url.indexOf('storyId') > -1) {
+		let storyId = url.split('storyId=')[1]; 
+		content = require('fs').readFileSync('./src/content/Story_' + storyId + '.html', 'utf-8'); 
 	}
 
 	return Vue.createSSRApp({
