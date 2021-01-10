@@ -33,6 +33,16 @@ const createSSRApp = function(url) {
 				content = '<p>Not Found</p>'; 
 			}
 		}
+	} else if (linkId == 2) {
+		if (sublinkId == 0) {
+			content = fs.readFileSync('./src/content/Link_' + linkId + '.html', 'utf-8'); 
+		} else {
+			if (fs.existsSync('./src/content/Link_' + linkId + '-Sublink_' + sublinkId + '.html')) {
+				content = fs.readFileSync('./src/content/Link_' + linkId + '-Sublink_' + sublinkId + '.html', 'utf-8');
+			} else {
+				content = '<p>Not Found</p>'; 
+			}
+		}
 	}
 
 	return Vue.createSSRApp({
