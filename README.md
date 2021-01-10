@@ -7,3 +7,9 @@ Originally this was a PHP/MySQL site with Admin and Consumer facing elements. Th
 There may be a requirement to add an Admin section in future. 
 
 To simplify the rebuild the project is being recreated as a Vue SSR app. 
+
+## Set up
+- `git clone https://github.com/davidtrussler/socialist-alliance.git`
+- `cd socialist-alliance`
+- `npm install`
+- `npm run dev`

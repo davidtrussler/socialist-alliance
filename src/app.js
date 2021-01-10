@@ -4,7 +4,16 @@ const AppNav = require('./components/AppNav');
 const AppMain = require('./components/AppMain'); 
 const AppFooter = require('./components/AppFooter'); 
 
-const createSSRApp = function() {
+const createSSRApp = function(url) {
+	let content = 'NotFound'; 
+
+	if (url === '/') {
+		content = require('fs').readFileSync('./src/content/Home.html', 'utf-8'); 
+	} else if (url.indexOf('storyId') > -1) {
+		let storyId = url.split('storyId=')[1]; 
+		content = require('fs').readFileSync('./src/content/Story_' + storyId + '.html', 'utf-8'); 
+	}
+
 	return Vue.createSSRApp({
 		components: {
 			'app-header': AppHeader, 
@@ -28,7 +37,7 @@ const createSSRApp = function() {
 					<div id="wrap">
 						<app-header></app-header>
 						<app-nav></app-nav>
-						<app-main></app-main>
+						<app-main content='${content}'></app-main>
 						<app-footer></app-footer>
 					</div>
 				</body>
