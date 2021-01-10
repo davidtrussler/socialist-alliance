@@ -1,17 +1,38 @@
 const Vue = require('vue'); 
+const fs = require('fs'); 
 const AppHeader = require('./components/AppHeader'); 
 const AppNav = require('./components/AppNav'); 
 const AppMain = require('./components/AppMain'); 
 const AppFooter = require('./components/AppFooter'); 
 
 const createSSRApp = function(url) {
-	let content = 'NotFound'; 
+	let content = '<p>Not Found</p>'; 
+	let linkId = 0; 
+	let sublinkId = 0; 
+
+	if (url.indexOf('linkid') > -1) {
+		linkId = url.split('linkid=')[1].split('&')[0]; 
+	}; 
+
+	if (url.indexOf('sublinkid') > -1) {
+		sublinkId = url.split('sublinkid=')[1];
+	}
 
 	if (url === '/') {
-		content = require('fs').readFileSync('./src/content/Home.html', 'utf-8'); 
+		content = fs.readFileSync('./src/content/Home.html', 'utf-8'); 
 	} else if (url.indexOf('storyId') > -1) {
 		let storyId = url.split('storyId=')[1]; 
-		content = require('fs').readFileSync('./src/content/Story_' + storyId + '.html', 'utf-8'); 
+		content = fs.readFileSync('./src/content/Story_' + storyId + '.html', 'utf-8'); 
+	} else if (linkId == 3) {
+		if (sublinkId == 0) {
+			content = fs.readFileSync('./src/content/Link_' + linkId + '.html', 'utf-8'); 
+		} else {
+			if (fs.existsSync('./src/content/Sublink_' + sublinkId + '.html')) {
+				content = fs.readFileSync('./src/content/Sublink_' + sublinkId + '.html', 'utf-8');
+			} else {
+				content = '<p>Not Found</p>'; 
+			}
+		}
 	}
 
 	return Vue.createSSRApp({
