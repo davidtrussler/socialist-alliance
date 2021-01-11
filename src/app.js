@@ -19,12 +19,16 @@ const createSSRApp = function(url) {
 	}
 
 	if (url === '/') {
+		linkId = 1; 
 		content = fs.readFileSync('./src/content/Home.html', 'utf-8'); 
 	} else if (url === '/events') {
+		linkId = 5; 
 		content = fs.readFileSync('./src/content/Events.html', 'utf-8'); 
 	} else if (url === '/about') {
+		linkId = 6; 
 		content = fs.readFileSync('./src/content/About.html', 'utf-8'); 
 	} else if (url === '/contact') {
+		linkId = 7; 
 		content = fs.readFileSync('./src/content/Contact.html', 'utf-8'); 
 	} else if (url.indexOf('storyId') > -1) {
 		let storyId = url.split('storyId=')[1]; 
