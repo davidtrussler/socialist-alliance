@@ -2,7 +2,7 @@ const createSSRApp = require('../app');
 const renderer = require('@vue/server-renderer'); 
 const express = require('express'); 
 const server = express(); 
-const port = 4000; 
+const port = process.env.PORT || 4000; 
 
 server.use(express.static('public')); 
 
