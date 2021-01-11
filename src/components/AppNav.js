@@ -1,8 +1,9 @@
 const AppNav = {
+  props: ['linkId'], 
   template: `
     <nav id="links">
       <ul>
-        <li class="live">Home</li>
+        <li><a href="/">Home</a></li>
         <li><a href="/?linkid=3">CNWP</a></li>
         <li><a href="/?linkid=2">Left Unity</a></li>
         <li><a href="/?linkid=4">Reports</a></li>

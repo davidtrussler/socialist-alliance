@@ -87,7 +87,7 @@ const createSSRApp = function(url) {
 				<body class="Home">
 					<div id="wrap">
 						<app-header></app-header>
-						<app-nav></app-nav>
+						<app-nav linkId='${linkId}'></app-nav>
 						<app-main content='${content}'></app-main>
 						<app-footer></app-footer>
 					</div>
