@@ -7,7 +7,7 @@ const AppNav = {
         <li><a href="/?linkid=2">Left Unity</a></li>
         <li><a href="/?linkid=4">Reports</a></li>
         <li><a href="/events">Events</a></li>
-        <li><a href="/about.php">About Us</a></li>
+        <li><a href="/about">About Us</a></li>
         <li><a href="/contact.php">Contact Us</a></li>
       </ul>
     </nav>

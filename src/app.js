@@ -22,6 +22,8 @@ const createSSRApp = function(url) {
 		content = fs.readFileSync('./src/content/Home.html', 'utf-8'); 
 	} else if (url === '/events') {
 		content = fs.readFileSync('./src/content/Events.html', 'utf-8'); 
+	} else if (url === '/about') {
+		content = fs.readFileSync('./src/content/About.html', 'utf-8'); 
 	} else if (url.indexOf('storyId') > -1) {
 		let storyId = url.split('storyId=')[1]; 
 		content = fs.readFileSync('./src/content/Story_' + storyId + '.html', 'utf-8'); 
