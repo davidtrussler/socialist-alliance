@@ -33,8 +33,8 @@ const createSSRApp = function(url) {
 		if (sublinkId == 0) {
 			content = fs.readFileSync('./src/content/Link_' + linkId + '.html', 'utf-8'); 
 		} else {
-			if (fs.existsSync('./src/content/Sublink_' + sublinkId + '.html')) {
-				content = fs.readFileSync('./src/content/Sublink_' + sublinkId + '.html', 'utf-8');
+			if (fs.existsSync('./src/content/Link_3-Sublink_' + sublinkId + '.html')) {
+				content = fs.readFileSync('./src/content/Link_3-Sublink_' + sublinkId + '.html', 'utf-8');
 			} else {
 				content = '<p>Not Found</p>'; 
 			}
