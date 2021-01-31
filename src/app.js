@@ -1,5 +1,6 @@
 const Vue = require('vue'); 
 const fs = require('fs'); 
+const { fetchContent } = require('./db'); 
 const AppHeader = require('./components/AppHeader'); 
 const AppNav = require('./components/AppNav'); 
 const AppMain = require('./components/AppMain'); 
@@ -73,6 +74,10 @@ const createSSRApp = function(url) {
 		}
 	}
 
+	fetchContent((sublinkId), data => {
+		console.log('data: ', data)
+	}); 
+
 	return Vue.createSSRApp({
 		components: {
 			'app-header': AppHeader, 
@@ -106,3 +111,58 @@ const createSSRApp = function(url) {
 }
 
 module.exports = createSSRApp;
+
+/****
+function handleRender(req, res) {
+  if (req.url.indexOf('/blog') > -1) {
+		// Blog page is requested
+		if (req.url.indexOf('?titleid') == -1) {
+			// Main page requested: display listings
+			dataStore.dispatch({
+				type: 'BLOG_CALLED_MAIN',
+			}); 
+
+			fetchAllPosts(data => {
+				// Add response data to store
+				dataStore.dispatch({
+					type: 'POSTS_UPDATED', 
+					payload: data
+				}); 
+
+				const markup = generateMarkup(req); 
+
+				res.send(renderFullPage(markup)); 
+			})
+  	} else {
+  		const titleid = req.url.split('?titleid=')[1]; 
+  		const postidArr = titleid.split('-'); 
+  		const postid = postidArr[postidArr.length - 1]; 
+
+			dataStore.dispatch({
+				type: 'BLOG_CALLED_POST', 
+				payload: {
+					'context': 'singlePost', 
+					'postid': postid
+				}
+			}); 
+
+			fetchSinglePost((postid), data => {
+				// Add response data to store
+				dataStore.dispatch({
+					type: 'POST_UPDATED', 
+					postid: postid, 
+					payload: data
+				}); 
+				
+			  const markup = generateMarkup(req); 
+
+				res.send(renderFullPage(markup)); 
+			})
+  	}
+  } else {
+	  const markup = generateMarkup(req); 
+
+		res.send(renderFullPage(markup)); 
+  }
+}; 
+*****/
