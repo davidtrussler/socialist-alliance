@@ -9,6 +9,7 @@ const createSSRApp = function(url) {
 	let content = '<p>Not Found</p>'; 
 	let linkId = 0; 
 	let sublinkId = 0; 
+	let title = ''; 
 
 	if (url.indexOf('linkid') > -1) {
 		linkId = url.split('linkid=')[1].split('&')[0]; 
@@ -20,16 +21,23 @@ const createSSRApp = function(url) {
 
 	if (url === '/') {
 		content = fs.readFileSync('./src/content/Home.html', 'utf-8'); 
+		title = 'Home'; 
 	} else if (url === '/events') {
 		content = fs.readFileSync('./src/content/Events.html', 'utf-8'); 
+		title = 'Events'; 
 	} else if (url === '/about') {
 		content = fs.readFileSync('./src/content/About.html', 'utf-8'); 
+		title = 'About Us'; 
 	} else if (url === '/contact') {
 		content = fs.readFileSync('./src/content/Contact.html', 'utf-8'); 
+		title = 'Contact Us'; 
 	} else if (url.indexOf('storyId') > -1) {
 		let storyId = url.split('storyId=')[1]; 
 		content = fs.readFileSync('./src/content/Story_' + storyId + '.html', 'utf-8'); 
+		title = 'Home'; 
 	} else if (linkId == 3) {
+		title = 'CNWP'; 
+
 		if (sublinkId == 0) {
 			content = fs.readFileSync('./src/content/Link_' + linkId + '.html', 'utf-8'); 
 		} else {
@@ -40,6 +48,8 @@ const createSSRApp = function(url) {
 			}
 		}
 	} else if (linkId == 2) {
+		title = 'Left Unity'; 
+
 		if (sublinkId == 0) {
 			content = fs.readFileSync('./src/content/Link_' + linkId + '.html', 'utf-8'); 
 		} else {
@@ -50,6 +60,8 @@ const createSSRApp = function(url) {
 			}
 		}
 	} else if (linkId == 4) {
+		title = 'Reports'; 
+
 		if (sublinkId == 0) {
 			content = fs.readFileSync('./src/content/Link_' + linkId + '.html', 'utf-8'); 
 		} else {
@@ -72,7 +84,7 @@ const createSSRApp = function(url) {
 			<!DOCTYPE html>
 			<html lang="en-GB">
 				<head>
-					<title>Socialist Alliance | Home</title>
+					<title>Socialist Alliance | ${title}</title>
 					<meta charset="utf-8"/>
 					<meta name="viewport" content="width=device-width, initial-scale=1.0">
 					<link rel="stylesheet" type="text/css" href="/socAllPage.css">
@@ -80,7 +92,7 @@ const createSSRApp = function(url) {
 					<script type="text/javascript" src="/socAllPage.js"></script>
 				</head>
 
-				<body class="Home">
+				<body class="${title}">
 					<div id="wrap">
 						<app-header></app-header>
 						<app-nav linkId='${linkId}' url='${url}'></app-nav>
