@@ -13,3 +13,4 @@ To simplify the rebuild the project is being recreated as a Vue SSR app.
 - `cd socialist-alliance`
 - `npm install`
 - `npm run dev`
+- `cp .env-example .env` to create the file to hold environmental variables
