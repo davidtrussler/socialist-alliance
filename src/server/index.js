@@ -7,14 +7,14 @@ const port = process.env.PORT || 4000;
 server.use(express.static('public')); 
 
 server.get('*', (req, res) => {
-	const app = createSSRApp(req.url);
-
-	renderer.renderToString(app).then(markup => {
-		res.end(`${markup}`); 
-	}).catch(err => {
-		console.error(err); 
-	}); 
-}); 
+	createSSRApp(req.url).then(app => {
+		renderer.renderToString(app).then(markup => {
+			res.end(`${markup}`);
+		}).catch(err => {
+			console.error(err);
+		})
+	})
+});
 
 server.listen(port, () => {
   console.log(`Server is listening on port: ${port}`)
