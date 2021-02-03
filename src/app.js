@@ -1,9 +1,11 @@
 const Vue = require('vue'); 
 const fs = require('fs'); 
 const { fetchContent } = require('./db'); 
+const { fetchSublinks } = require('./db');
 const AppHeader = require('./components/AppHeader'); 
 const AppNav = require('./components/AppNav'); 
 const AppMain = require('./components/AppMain'); 
+const AppMainHome = require('./components/AppMainHome'); 
 const AppFooter = require('./components/AppFooter'); 
 
 function createSSRApp(url) {
@@ -11,19 +13,27 @@ function createSSRApp(url) {
 	let linkId = 0; 
 	let sublinkId = 0; 
 	let title = ''; 
+	let mainComponent = AppMain; 
 
-	if (url.indexOf('linkid') > -1) {
-		linkId = url.split('linkid=')[1].split('&')[0]; 
-	}; 
-
-	if (url.indexOf('sublinkid') > -1) {
-		sublinkId = url.split('sublinkid=')[1];
+	if (url == '/') {
+		linkId = 1;
+	} else if (url.indexOf('?') > -1) {
+		urlArray = url.split('?')[1].split('&');
 	}
 
-	if (url === '/') {
-		content = fs.readFileSync('./src/content/Home.html', 'utf-8'); 
-		title = 'Home'; 
-	} else if (url === '/events') {
+	// if (urlArray.length == 1) {
+	// 	linkId = urlArray[0].split('=')[1];
+	// }
+
+	if (urlArray.length > 1) {
+		linkId = urlArray[0].split('=')[1];
+		sublinkId = urlArray[1].split('=')[1];
+	}
+
+	// console.log('linkId: ', linkId);
+	// console.log('sublinkId: ', sublinkId);
+
+	if (url === '/events') {
 		content = fs.readFileSync('./src/content/Events.html', 'utf-8'); 
 		title = 'Events'; 
 	} else if (url === '/about') {
@@ -75,14 +85,22 @@ function createSSRApp(url) {
 	}
 
 	return new Promise((resolve, reject) => {
-		fetchContent((sublinkId), data => {
-			content = data.content; 
+		if (linkId === 1) {
+			mainComponent = AppMainHome; 
+			title = 'Home';
+		}
+
+		fetchData(linkId, sublinkId).then(data => {
+			console.log('data: ', data); 
 
 			const app = Vue.createSSRApp({
+				data() {
+					return {storyData: data};
+				},
 				components: {
 					'app-header': AppHeader, 
 					'app-nav': AppNav, 
-					'app-main': AppMain, 
+					'app-main': mainComponent, 
 					'app-footer': AppFooter
 				}, 
 				template: `
@@ -101,7 +119,7 @@ function createSSRApp(url) {
 							<div id="wrap">
 								<app-header></app-header>
 								<app-nav linkId='${linkId}' url='${url}'></app-nav>
-								<app-main content='${content}'></app-main>
+								<app-main v-bind:storyData=storyData></app-main>
 								<app-footer></app-footer>
 							</div>
 						</body>
@@ -110,8 +128,10 @@ function createSSRApp(url) {
 			})
 
 			resolve (app)
-		})
-	}); 
+		});
+	}).catch(reject => {
+		console.log(reject);
+	})
 }
 
 module.exports = createSSRApp;

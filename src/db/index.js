@@ -35,6 +35,21 @@ function fetchContent(sublinkId, callback) {
 	})
 }; 
 
+function fetchSublinks(linkId) {
+	let query = `SELECT sublinkid, sublinkname FROM sublinks WHERE linkid=${linkId} ORDER BY sublinkorder DESC;`;
+
+	return new Promise((resolve, reject) => {
+		connection.query(query, (err, res) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(res);
+			}
+		})
+	})
+};
+
 module.exports = {
-	fetchContent
+	fetchContent,
+	fetchSublinks
 }; 
