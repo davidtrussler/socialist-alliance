@@ -1,11 +1,12 @@
 const Vue = require('vue'); 
 const fs = require('fs'); 
-const { fetchContent } = require('./db'); 
-const { fetchSublinks } = require('./db');
+// const { fetchContent } = require('./db'); 
+const { fetchData } = require('./db');
 const AppHeader = require('./components/AppHeader'); 
 const AppNav = require('./components/AppNav'); 
 const AppMain = require('./components/AppMain'); 
 const AppMainHome = require('./components/AppMainHome'); 
+const AppMainHomeStory = require('./components/AppMainHomeStory'); 
 const AppFooter = require('./components/AppFooter'); 
 
 function createSSRApp(url) {
@@ -14,6 +15,7 @@ function createSSRApp(url) {
 	let sublinkId = 0; 
 	let title = ''; 
 	let mainComponent = AppMain; 
+	let urlArray = [];
 
 	if (url == '/') {
 		linkId = 1;
@@ -21,17 +23,10 @@ function createSSRApp(url) {
 		urlArray = url.split('?')[1].split('&');
 	}
 
-	// if (urlArray.length == 1) {
-	// 	linkId = urlArray[0].split('=')[1];
-	// }
-
-	if (urlArray.length > 1) {
+	if (urlArray.length > 0) {
 		linkId = urlArray[0].split('=')[1];
 		sublinkId = urlArray[1].split('=')[1];
 	}
-
-	// console.log('linkId: ', linkId);
-	// console.log('sublinkId: ', sublinkId);
 
 	if (url === '/events') {
 		content = fs.readFileSync('./src/content/Events.html', 'utf-8'); 
@@ -85,14 +80,17 @@ function createSSRApp(url) {
 	}
 
 	return new Promise((resolve, reject) => {
-		if (linkId === 1) {
-			mainComponent = AppMainHome; 
+		if (linkId == 1) {
 			title = 'Home';
+
+			if (sublinkId == 0) {
+				mainComponent = AppMainHome; 
+			} else {
+				mainComponent = AppMainHomeStory; 				
+			}
 		}
 
 		fetchData(linkId, sublinkId).then(data => {
-			console.log('data: ', data); 
-
 			const app = Vue.createSSRApp({
 				data() {
 					return {storyData: data};

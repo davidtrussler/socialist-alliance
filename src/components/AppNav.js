@@ -7,13 +7,13 @@ const AppNav = {
         <li v-else><a href="/">Home</a></li>
 
         <li v-if="linkId == '3'" class="live">CNWP</li>
-        <li v-else><a href="/?linkid=3">CNWP</a></li>
+        <li v-else><a href="/?linkId=3">CNWP</a></li>
 
         <li v-if="linkId == '2'" class="live">Left Unity</li>
-        <li v-else><a href="/?linkid=2">Left Unity</a></li>
+        <li v-else><a href="/?linkId=2">Left Unity</a></li>
 
         <li v-if="linkId == '4'" class="live">Reports</li>
-        <li v-else><a href="/?linkid=4">Reports</a></li>
+        <li v-else><a href="/?linkId=4">Reports</a></li>
 
         <li v-if="url == '/events'" class="live">Events</li>
         <li v-else><a href="/events">Events</a></li>

@@ -15,41 +15,32 @@ connection.connect(function(err) {
 	console.log('Database connected as id ' + connection.threadId);
 });
 
-function fetchContent(sublinkId, callback) {
-	let query = 'SELECT content FROM sublinks WHERE sublinkid=' + sublinkId;
+function fetchData(linkId, sublinkId) {
+	let query = ``;
+
+	if (linkId == 1) {
+		if (sublinkId == 0) {
+			query = `SELECT sublinkid, sublinkname FROM sublinks WHERE linkid=${linkId} ORDER BY sublinkorder DESC;`;
+		} else {
+			query = `SELECT sublinkname, content FROM sublinks WHERE sublinkid=${sublinkId};`;
+		}
+	}
 
 	return new Promise((resolve, reject) => {
-		connection.query(query, (err, res) => {
-			if (err) {
-				reject(err); 
-			} else {
-				resolve(res); 
-			}
-		})
-	}).then((response) => {
-		callback(
-			response[0]
-		)
-	}).catch(reject => {
-		return reject;
-	})
-}; 
-
-function fetchSublinks(linkId) {
-	let query = `SELECT sublinkid, sublinkname FROM sublinks WHERE linkid=${linkId} ORDER BY sublinkorder DESC;`;
-
-	return new Promise((resolve, reject) => {
-		connection.query(query, (err, res) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(res);
-			}
-		})
+		if (linkId === 0) {
+			resolve();	
+		} else {
+			connection.query(query, (err, res) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(res);
+				}
+			})
+		}
 	})
 };
 
 module.exports = {
-	fetchContent,
-	fetchSublinks
+	fetchData
 }; 

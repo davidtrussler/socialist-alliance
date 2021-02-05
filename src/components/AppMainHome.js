@@ -4,7 +4,7 @@ const story = {
 		<div class="story">
 			<p class="storyHead" v-html="sublinkname"></p>
 			<p class="storyLink">
-				<a v-bind:href="'/?linkId=1&storyId=' + sublinkid">read article</a>
+				<a v-bind:href="'/?linkId=1&sublinkId=' + sublinkid">read article</a>
 			</p>
 		</div>
 	`
