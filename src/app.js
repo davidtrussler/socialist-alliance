@@ -1,12 +1,12 @@
 const Vue = require('vue'); 
 const fs = require('fs'); 
-// const { fetchContent } = require('./db'); 
 const { fetchData } = require('./db');
 const AppHeader = require('./components/AppHeader'); 
 const AppNav = require('./components/AppNav'); 
 const AppMain = require('./components/AppMain'); 
 const AppMainHome = require('./components/AppMainHome'); 
 const AppMainHomeStory = require('./components/AppMainHomeStory'); 
+const AppMainPanels = require('./components/AppMainPanels');
 const AppFooter = require('./components/AppFooter'); 
 
 function createSSRApp(url) {
@@ -20,12 +20,20 @@ function createSSRApp(url) {
 	if (url == '/') {
 		linkId = 1;
 	} else if (url.indexOf('?') > -1) {
-		urlArray = url.split('?')[1].split('&');
+		if (url.indexOf('&') > -1) {
+			urlArray = url.split('?')[1].split('&');
+		} else {
+			urlArray = url.split('?')[1];
+		}
 	}
 
 	if (urlArray.length > 0) {
-		linkId = urlArray[0].split('=')[1];
-		sublinkId = urlArray[1].split('=')[1];
+		if (urlArray.length == 2) {
+			linkId = urlArray[0].split('=')[1];
+			sublinkId = urlArray[1].split('=')[1];
+		} else {
+			linkId = urlArray.split('=')[1];
+		}
 	}
 
 	if (url === '/events') {
@@ -41,18 +49,6 @@ function createSSRApp(url) {
 		let storyId = url.split('storyId=')[1]; 
 		content = fs.readFileSync('./src/content/Story_' + storyId + '.html', 'utf-8'); 
 		title = 'Home'; 
-	} else if (linkId == 3) {
-		title = 'CNWP'; 
-
-		if (sublinkId == 0) {
-			content = fs.readFileSync('./src/content/Link_' + linkId + '.html', 'utf-8'); 
-		} else {
-			if (fs.existsSync('./src/content/Link_3-Sublink_' + sublinkId + '.html')) {
-				content = fs.readFileSync('./src/content/Link_3-Sublink_' + sublinkId + '.html', 'utf-8');
-			} else {
-				content = '<p>Not Found</p>'; 
-			}
-		}
 	} else if (linkId == 2) {
 		title = 'Left Unity'; 
 
@@ -88,6 +84,9 @@ function createSSRApp(url) {
 			} else {
 				mainComponent = AppMainHomeStory; 				
 			}
+		} else if (linkId == 3) {
+			title = 'CNWP';
+			mainComponent = AppMainPanels;
 		}
 
 		fetchData(linkId, sublinkId).then(data => {
@@ -116,8 +115,14 @@ function createSSRApp(url) {
 						<body class="${title}">
 							<div id="wrap">
 								<app-header></app-header>
-								<app-nav linkId='${linkId}' url='${url}'></app-nav>
-								<app-main v-bind:storyData=storyData></app-main>
+								<app-nav 
+									linkId='${linkId}' 
+									url='${url}'
+								></app-nav>
+								<app-main 
+									v-bind:storyData=storyData
+									thisSublinkId='${sublinkId}'
+								></app-main>
 								<app-footer></app-footer>
 							</div>
 						</body>

@@ -24,6 +24,20 @@ function fetchData(linkId, sublinkId) {
 		} else {
 			query = `SELECT sublinkname, content FROM sublinks WHERE sublinkid=${sublinkId};`;
 		}
+	} else if (linkId == 3) {
+		if (sublinkId == 0) {
+			query = `
+				SELECT sublinkid, content, sublinkorder FROM sublinks WHERE sublinkorder=0 AND linkid=${linkId}
+				UNION
+				(SELECT sublinkid, sublinkname, sublinkorder FROM sublinks WHERE linkid=${linkId} AND sublinkorder!=0
+				ORDER BY sublinkorder ASC);`;
+		} else {
+			query = `
+				SELECT sublinkid, content, sublinkorder FROM sublinks WHERE sublinkid=${sublinkId}
+				UNION
+				(SELECT sublinkid, sublinkname, sublinkorder FROM sublinks WHERE linkid=${linkId} AND sublinkorder!=0
+				ORDER BY sublinkorder ASC);`;
+		}
 	}
 
 	return new Promise((resolve, reject) => {
