@@ -1,12 +1,16 @@
 const links = {
 	props: ['sublinkid', 'sublinkname', 'thisSublinkId'],
 	template: `
-		<p v-if="sublinkid == thisSublinkId" class="live">
-			{{ sublinkname }}
+		<p
+			v-if="sublinkid == thisSublinkId" class="live"
+			v-html="sublinkname"
+		>
 		</p>
 		<p v-else>
-			<a v-bind:href="'/?linkId=3&sublinkId=' + sublinkid">
-				{{ sublinkname }}
+			<a
+				v-bind:href="'/?linkId=3&sublinkId=' + sublinkid"
+				v-html="sublinkname"
+			>
 			</a>
 		</p>
 	`
