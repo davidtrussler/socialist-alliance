@@ -44,6 +44,7 @@ const AppMainPanels = {
 						v-bind:sublinkname="link.content"
 						v-bind:thisSublinkId="thisSublinkId"
 					></app-links>
+					<img class="panel_bottom" src="/panel_BG_bottom.gif"/>
 				</div>
 			</div>
 		</main>
