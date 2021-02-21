@@ -24,7 +24,7 @@ function fetchData(linkId, sublinkId) {
 		} else {
 			query = `SELECT sublinkname, content FROM sublinks WHERE sublinkid=${sublinkId};`;
 		}
-	} else if (linkId == 3) {
+	} else if (linkId == 2 || linkId == 3) {
 		if (sublinkId == 0) {
 			query = `
 				SELECT sublinkid, content, sublinkorder FROM sublinks WHERE sublinkorder=0 AND linkid=${linkId}

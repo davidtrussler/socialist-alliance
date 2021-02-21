@@ -49,18 +49,6 @@ function createSSRApp(url) {
 		let storyId = url.split('storyId=')[1]; 
 		content = fs.readFileSync('./src/content/Story_' + storyId + '.html', 'utf-8'); 
 		title = 'Home'; 
-	} else if (linkId == 2) {
-		title = 'Left Unity'; 
-
-		if (sublinkId == 0) {
-			content = fs.readFileSync('./src/content/Link_' + linkId + '.html', 'utf-8'); 
-		} else {
-			if (fs.existsSync('./src/content/Link_' + linkId + '-Sublink_' + sublinkId + '.html')) {
-				content = fs.readFileSync('./src/content/Link_' + linkId + '-Sublink_' + sublinkId + '.html', 'utf-8');
-			} else {
-				content = '<p>Not Found</p>'; 
-			}
-		}
 	} else if (linkId == 4) {
 		title = 'Reports'; 
 
@@ -84,6 +72,9 @@ function createSSRApp(url) {
 			} else {
 				mainComponent = AppMainHomeStory; 				
 			}
+		} else if (linkId == 2) {
+			title = 'Left Unity';
+			mainComponent = AppMainPanels;
 		} else if (linkId == 3) {
 			title = 'CNWP';
 			mainComponent = AppMainPanels;
@@ -121,6 +112,7 @@ function createSSRApp(url) {
 								></app-nav>
 								<app-main 
 									v-bind:storyData=storyData
+									linkId='${linkId}'
 									thisSublinkId='${sublinkId}'
 								></app-main>
 								<app-footer></app-footer>

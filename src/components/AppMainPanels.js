@@ -1,5 +1,5 @@
 const links = {
-	props: ['sublinkid', 'sublinkname', 'thisSublinkId'],
+	props: ['linkId', 'sublinkid', 'sublinkname', 'thisSublinkId'],
 	template: `
 		<p
 			v-if="sublinkid == thisSublinkId" class="live"
@@ -8,7 +8,7 @@ const links = {
 		</p>
 		<p v-else>
 			<a
-				v-bind:href="'/?linkId=3&sublinkId=' + sublinkid"
+				v-bind:href="'/?linkId=' + linkId + '&sublinkId=' + sublinkid"
 				v-html="sublinkname"
 			>
 			</a>
@@ -17,7 +17,7 @@ const links = {
 };
 
 const AppMainPanels = {
-	props: ['storyData', 'thisSublinkId'],
+	props: ['storyData', 'linkId', 'thisSublinkId'],
 	components: {
 		'app-links': links
 	},
@@ -40,6 +40,7 @@ const AppMainPanels = {
 				<div class="panel_right">
 					<app-links
 						v-for="link in links"
+						v-bind:linkId="linkId"
 						v-bind:sublinkid="link.sublinkid"
 						v-bind:sublinkname="link.content"
 						v-bind:thisSublinkId="thisSublinkId"
